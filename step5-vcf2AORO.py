@@ -21,14 +21,19 @@ def judgeF1Count(P1base,P2base,ref,refcount,alt,altcout):
 
 def filterHomo(input_vcffil, P1,P2,F1):
     '''e.g. P1=[L14-1, L14-2, L14-3]
-    P2 = [L17-1, L17-2, L17-3]
-    ZH = [L9-1, L9-2, L9-3]
-    FA = [L3-1, L3-2, L3-3]'''
+    P2 = [L18-1, L18-2, L18-3]
+    F1 = [L4-1, L4-2, L4-3, L10-1, L10-2]'''
     inputvcf = open(input_vcffil, 'r')
     invcf = vcf.Reader(inputvcf)
-    print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s'%\
-('Chr.','Pos.','14_base','17_base','3-1_14count','3-1_17count','3-2_14count','3-2_17count','3-3_14count','3-3_17count',\
-'9-1_14count','9-1_17count','9-2_14count','9-2_17count','9-3_14count','9-3_17count')
+    header1 = 'Chr\tPOS\t%s_Base\t%s_Base\t'%(P1[0].split('-')[0],\
+P2[0].split('-')[0])
+    headtail = []
+    for i,j in zip(F1, F1):
+        headtail.append(i+'_P1COUNT')
+        headtail.append(j+'_P2COUNT')
+    header2 = '\t'.join(headtail)
+    header = header1+header2
+    print header
     for i in invcf:
         info = []
         ref = i.REF
@@ -54,14 +59,13 @@ def filterHomo(input_vcffil, P1,P2,F1):
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) == 14:
-        p1list = [sys.argv[2], sys.argv[3], sys.argv[4]]
-        p2list = [sys.argv[5], sys.argv[6], sys.argv[7]]
-        f1list = \
-[sys.argv[8],sys.argv[9],sys.argv[10],sys.argv[11],sys.argv[12],sys.argv[13]]
+    if len(sys.argv) == 5:
+        p1list = sys.argv[2].split(',')
+        p2list = sys.argv[3].split(',')
+        f1list = sys.argv[4].split(',')
         filterHomo(sys.argv[1], p1list, p2list, f1list)
     else:
-        print 'Usage:\npython filter_9311_Ch1073.py input_vcffile output_vcffile P1-1 P1-2 P1-3 P2-1 P2-2 P2-3'
+        print 'Usage:\npython step5-vcf2AORO.py input_vcffil P1 P2 F1'
 
 
 

@@ -38,4 +38,4 @@ if __name__ == "__main__":
     if len(sys.argv) == 4:
         addgene(sys.argv[1], sys.argv[2], sys.argv[3])
     else:
-        print 'Usage:\npython step8-add-gff3.py gfffile statsTable'
+        print 'Usage:\npython step8-add-gff3.py gfffile statsTable outputfile'

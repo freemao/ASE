@@ -33,7 +33,8 @@ def combineTables(table1, table2, finaltable):
             newline = '%s\t%s'%(T1base,'\t'.join(NewCounts))
             f3.write(newline+'\n')
         else:
-            print "the parents' bases are different"
+            print "parents' bases are different at %s"%\
+(i.split()[0]+'-'+i.split()[1])
 if __name__ == "__main__":
     import sys
     if len(sys.argv) == 4:
