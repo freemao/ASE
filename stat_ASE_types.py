@@ -25,7 +25,7 @@ def drawbars(statsGeneTable):
                         genedic[m] = set(['P2'])
                     else:
                         print 'check!'
-                elif m in geneLS:
+                else:
                     if n == '.':
                         pass
                     elif n == 'P1':
@@ -34,24 +34,22 @@ def drawbars(statsGeneTable):
                         genedic[m].add('P2')
                     else:
                         print 'check!'
-        ASEgenes = 0
         P1ASE = 0
         P2ASE = 0
         P1P2ASE = 0
         f1 = open('%s_P1_ASEgenes.txt'%j, 'w')
         f2 = open('%s_P2_ASEgenes.txt'%j, 'w')
         f3 = open('%s_P1_P2_ASEgenes.txt'%j, 'w')
-        for i in geneLS:
-            if len(genedic[i]) > 0: ASEgenes+=1
-            if genedic[i] == set(['P1','P2']):
+        for k in geneLS:
+            if genedic[k] == set(['P1','P2']):
                 P1P2ASE += 1
-                f3.write(i+'\n')
-            if genedic[i] == set(['P1']):
+                f3.write(k+'\n')
+            elif genedic[k] == set(['P1']):
                 P1ASE += 1
-                f1.write(i+'\n')
-            if genedic[i] == set(['P2']):
+                f1.write(k+'\n')
+            if genedic[k] == set(['P2']):
                 P2ASE += 1
-                f2.write(i+'\n')
+                f2.write(k+'\n')
         f1.close()
         f2.close()
         f3.close()
@@ -60,13 +58,13 @@ def drawbars(statsGeneTable):
         print 'Genes covered ASE SNP: %s. %s of Total genes.'\
 %(len(geneLS),len(geneLS)/float(42189))
         print 'Genes with ASE: %s. %s of Total genes.'\
-%(ASEgenes, ASEgenes/float(42189))
+%(P1ASE+P2ASE+P1P2ASE, (P1ASE+P2ASE+P1P2ASE)/float(42189))
         print '\tP1 ASE genes: %s. %s of ASE genes.'\
-%(P1ASE, P1ASE/float(ASEgenes))
+%(P1ASE, P1ASE/float(P1ASE+P2ASE+P1P2ASE))
         print '\tP2 ASE genes: %s. %s of ASE genes.'\
-%(P2ASE, P2ASE/float(ASEgenes))
+%(P2ASE, P2ASE/float(P1ASE+P2ASE+P1P2ASE))
         print '\tP1P2 ASE genes: %s. %s of ASE genes.\n'\
-%(P1P2ASE, P1P2ASE/float(ASEgenes))
+%(P1P2ASE, P1P2ASE/float(P1ASE+P2ASE+P1P2ASE))
 
 if __name__ == "__main__":
     import sys
